@@ -18,44 +18,36 @@ class Usuario
 		$this->conn = $conn;
 	}
 
-	// Métodos para manejar usuarios
 	// Obtener todos los usuarios
 	public function getAllUsuarios()
 	{
-		$query = "SELECT * FROM usuario";
+		$query = "SELECT * FROM persona";
 		$result = mysqli_query($this->conn, $query);
 		$usuarios = [];
-		while($row = mysqli_fetch_assoc($result)) {
+		while($row = mysqli_fetch_assoc($result)){
 			$usuarios[] = $row;
 		}
 		return $usuarios;
 	}
+
 	// Obtener un usuario por ID
 	public function getUsuarioById($id)
 	{
-		$query = "SELECT * FROM usuario WHERE id = $id ";
+		$query = "SELECT * FROM persona WHERE id = ".$id;
 		$result = mysqli_query($this->conn, $query);
-		$usuario = mysqli_fetch_assoc($result);
-		return $usuario;
+		return mysqli_fetch_assoc($result);
 	}
-	// Agregar un nuevo usuario
-	public function addUsuario($data)
+
+	// Crear un nuevo usuario
+	public function createUsuario($usr_name, $usr_email, $usr_pass)
 	{
-		if(!isset($data['usr_name']) || !isset($data['usr_email']) || !isset($data['usr_pass'])) {
-			http_response_code(400);
-			echo json_encode(["error" => "Datos incompletos"]);
-		}else{
-			$usr_name = $data['usr_name'];
-			$usr_email = $data['usr_email'];
-			$usr_pass = $data['usr_pass'];
-			$query = "INSERT INTO persona (nombre, email, contrasena) 
+		$query = "INSERT INTO persona (nombre, email, contrasena) 
 				VALUES ('$usr_name', '$usr_email', '$usr_pass')";
-			$result = mysqli_query($this->conn, $query);
-			if($result){
-				return true;
-			} else {
-				return false;
-			}
+		$result = mysqli_query($this->conn, $query);
+		if($result){
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -65,7 +57,7 @@ class Usuario
 		//echo "email: $usr_email, pass: $usr_pass";
 		$query = "SELECT * FROM persona WHERE email = '$usr_email'";
 		$result = mysqli_query($this->conn, $query);
-		if(mysqli_num_rows($result) > 0){
+		if($result && mysqli_num_rows($result) > 0){
 			$usuario = mysqli_fetch_assoc($result);
 			if($usr_pass == $usuario['contrasena']){
 				return $usuario; // Retorna el usuario si las credenciales son correctas
@@ -80,10 +72,11 @@ class Usuario
 	// Actualizar un usuario por ID
 	public function updateUsuario($id, $data)
 	{
-		$usr_name = $data['usr_name'];
-		$usr_email = $data['usr_email'];
-		$usr_pass = $data['usr_pass'];
-		$query = "UPDATE usuario SET usr_name = '$usr_name', usr_email = '$usr_email', usr_pass = '$usr_pass' WHERE id = ".$id;
+		$updates = [];
+		foreach($data as $key => $value){
+			$updates[] = "$key = '$value'";
+		}
+		$query = "UPDATE persona SET ".implode(', ', $updates)." WHERE id = ".$id;
 		$result = mysqli_query($this->conn, $query);
 		if($result){
 			return true;
@@ -91,6 +84,7 @@ class Usuario
 			return false;
 		}
 	}
+
 	// Eliminar un usuario por ID
 	public function deleteUsuario($id)
 	{

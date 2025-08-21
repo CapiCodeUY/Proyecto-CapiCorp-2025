@@ -18,42 +18,57 @@
     </div>
   </header>
 
-  <section class="section">
+  <main class="form-wrap">
     <div class="container">
-      <div class="project-card">
-        <h2 class="project-title">Contacto</h2>
-        <p class="project-description">¿Tienes alguna duda o sugerencia? Escribinos un mensaje y te responderemos a la brevedad.</p>
-        <form>
-          <div>
-            <label for="nombre">Nombre:</label><br />
-            <input type="text" id="nombre" name="nombre" required />
-          </div><br />
-          <div>
-            <label for="email">Correo:</label><br />
-            <input type="email" id="email" name="email" required />
-          </div><br />
-          <div>
-            <label for="mensaje">Mensaje:</label><br />
-            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-          </div><br />
-          <button type="submit">Enviar →</button>
-          <div class="mensaje"></div>
+      <div class="form-card">
+        <h1 class="form-title">Contacto</h1>
+        <p class="form-sub">Dejanos tu mensaje y te respondemos a la brevedad.</p>
+
+        <form id="contact-form" novalidate>
+          <div class="field">
+            <label for="c_name">Nombre</label>
+            <input id="c_name" class="input" type="text" placeholder="Tu nombre" required>
+          </div>
+          <div class="field">
+            <label for="c_email">Email</label>
+            <input id="c_email" class="input" type="email" placeholder="tu@email.com" required>
+          </div>
+          <div class="field">
+            <label for="c_msg">Mensaje</label>
+            <textarea id="c_msg" class="input" rows="5" placeholder="¿En qué podemos ayudarte?" required></textarea>
+          </div>
+
+          <div class="field">
+            <button class="btn btn-primary" type="submit">Enviar</button>
+          </div>
+
+          <p class="mensaje" aria-live="polite"></p>
         </form>
-        <br />
-        <p>
-          <h2 class="project-title">También podés contactarnos directamente:</h2><br />
-          <strong>Email:</strong> capicode2025@gmail.com<br />
-          <strong>Teléfono:</strong> +598 99 123 456<br />
-          <strong>Ubicación:</strong> Montevideo, Uruguay
-        </p>
       </div>
     </div>
-  </section>
+  </main>
 
   <footer class="footer">
-    © CapiCode ® - CapiCorp
+    <p>© CapiCode ® - CapiCorp</p>
   </footer>
 
-  <script src="../JScripts/scripts.js"></script>
+  <script>
+    // Validación mínima local para contacto (no hay endpoint en el backend actual)
+    const form = document.getElementById('contact-form');
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const ok = c_name.value.trim() && c_email.value.trim() && c_msg.value.trim();
+      const msg = form.querySelector('.mensaje') || Object.assign(document.createElement('p'), {className: 'mensaje'});
+      if(!form.contains(msg)) form.appendChild(msg);
+      if(ok){
+        msg.textContent = '¡Mensaje enviado! Te responderemos pronto.';
+        msg.className = 'mensaje ok';
+        form.reset();
+      }else{
+        msg.textContent = 'Completá todos los campos.';
+        msg.className = 'mensaje warn';
+      }
+    });
+  </script>
 </body>
 </html>

@@ -14,10 +14,11 @@ $usuarioObj = new Usuario($conn);
 $method = $_SERVER['REQUEST_METHOD'];
 // Obtiene el endpoint de la solicitud
 $endpoint = $_SERVER['PATH_INFO'];
-// Establece el tipo de contenido de la respuesta (json)
-header('Content-Type: application/json');
 
-// Procesa la solicitud según el método HTTP
+// Establece el tipo de contenido de la respuesta
+header('Content-Type: application/json; charset=utf-8');
+
+// Maneja la solicitud según el método HTTP
 switch ($method) {
 	case 'GET':
 		if($endpoint === '/usuarios'){
@@ -29,40 +30,49 @@ switch ($method) {
 			$usuarioId = $matches[1];
 			$usuario = $usuarioObj->getUsuarioById($usuarioId);
 			echo json_encode($usuario);
+		} else {
+			http_response_code(404);
+			echo json_encode(['error' => 'Endpoint no encontrado']);
 		}
 		break;
+
 	case 'POST':
+		$input = file_get_contents('php://input');
+		$data = json_decode($input, true);
+
 		if($endpoint === '/usuarios'){
-			// Añade un nuevo usuario
-			$data = json_decode(file_get_contents('php://input'), true);
-			$result = $usuarioObj->addUsuario($data);
-			if ($result === true) {
-				http_response_code(201);
-				echo json_encode(['success' => $result]);
-			}else{
-				http_response_code(400);
+			if(isset($data['usr_name']) && isset($data['usr_email']) && isset($data['usr_pass'])){
+				$result = $usuarioObj->createUsuario($data['usr_name'], $data['usr_email'], $data['usr_pass']);
+				if($result){
+					echo json_encode(['success' => true]);
+				} else {
+					echo json_encode(['success' => false]);
+				}
+			} else {
 				echo json_encode(['error' => 'Datos incompletos o error al registrar usuario']);
 			}
 		}elseif ($endpoint === '/login') {
-			$data = json_decode(file_get_contents('php://input'), true);
 			$result = $usuarioObj->loginUsuario($data['usr_email'], $data['usr_pass']);
-			if ($result != false) {
-				echo json_encode(['success' => true, 'usuario' => $result]);
+			if($result){
+				echo json_encode(['success' => true, 'user' => $result]);
 			} else {
-				http_response_code(401);
-				echo json_encode(['error' => 'Credenciales incorrectas']);
+				echo json_encode(['success' => false, 'message' => 'Credenciales inválidas']);
 			}
+		} else {
+			http_response_code(404);
+			echo json_encode(['error' => 'Endpoint no encontrado']);
 		}
 		break;
+
 	case 'PUT':
+		parse_str(file_get_contents('php://input'), $data);
 		if (preg_match('/^\/usuarios\/(\d+)$/', $endpoint, $matches)) {
-			// Actualiza un usuario por ID
 			$usuarioId = $matches[1];
-			parse_str(file_get_contents('php://input'), $data);
 			$result = $usuarioObj->updateUsuario($usuarioId, $data);
 			echo json_encode(['success' => $result]);
 		}
 		break;
+
 	case 'DELETE':
 		if (preg_match('/^\/usuarios\/(\d+)$/', $endpoint, $matches)) {
 			// Elimina un usuario por ID
