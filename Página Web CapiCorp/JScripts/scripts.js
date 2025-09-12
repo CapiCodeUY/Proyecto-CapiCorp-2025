@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try{
-        const res = await fetch(baseFor('api.php/usuarios'), {
+        const res = await fetch(baseFor('../APIs/api.php/usuarios'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ usr_name: name, usr_email: email, usr_pass: pass })
@@ -92,11 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
           updateStrength(bar, '');
           setTimeout(()=> location.href = isHome ? 'Páginas Adyacentes/acceso-socios.html' : 'acceso-socios.html', 900);
         } else {
-          showMsg(registerForm, 'No se pudo registrar. Verificá los datos.', 'err');
+          showMsg(registerForm, 'Error: ' + data.error);
         }
       }catch(err){
         console.error(err);
-        showMsg(registerForm, 'Error de red. Intentalo de nuevo.', 'err');
+        showMsg(registerForm, 'Error de red. Intentalo de nuevo.' + err);
       }
     });
   }
@@ -123,10 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
         if(data?.success){
           showMsg(loginForm, 'Inicio de sesión exitoso 🎉', 'ok');
+          console.log("id_persona", data.success[0]);
+          console.log("email", data.success[1]);
+          console.log("nombre_completo", data.success[2]);
           // Aquí podrías redirigir si corresponde
           // location.href = '../index.html';
         }else{
-          showMsg(loginForm, data?.message || 'Credenciales inválidas.', 'err');
+          showMsg(loginForm, data?.message || 'Credenciales inválidas.' + data.error);
         }
       }catch(err){
         console.error(err);
