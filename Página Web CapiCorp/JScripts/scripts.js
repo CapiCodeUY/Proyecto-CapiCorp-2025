@@ -80,23 +80,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try{
-        const res = await fetch(baseFor('../APIs/api.php/usuarios'), {
+        const res = await fetch(baseFor('funciones_usuario.php'), {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ usr_name: name, usr_email: email, usr_pass: pass })
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `nombre_completo=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&contrasena=${encodeURIComponent(pass)}`
         });
         const data = await res.json();
-        if(data?.success){
-          showMsg(registerForm, 'Usuario registrado correctamente ✅', 'ok');
+        if(data.success){
+          showMsg(registerForm, data.message + ' ✅', 'ok');
           registerForm.reset();
           updateStrength(bar, '');
           setTimeout(()=> location.href = isHome ? 'Páginas Adyacentes/acceso-socios.html' : 'acceso-socios.html', 900);
         } else {
-          showMsg(registerForm, 'Error: ' + data.error);
+          showMsg(registerForm, 'Error: ' + data.message, 'err');
         }
       }catch(err){
         console.error(err);
-        showMsg(registerForm, 'Error de red. Intentalo de nuevo.' + err);
+        showMsg(registerForm, 'Error de red. Intentalo de nuevo.', 'err');
       }
     });
   }
