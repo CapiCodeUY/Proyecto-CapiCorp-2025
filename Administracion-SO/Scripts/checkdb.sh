@@ -1,7 +1,7 @@
 #!/bin/bash
 # Descripción: Comprueba que la BD principal de la Cooperativa de Viviendas responda consultas y tenga registros.
 
-# --- CONFIGURACIÓN DE VARIABLES ---
+# --- CONFIGURACIÓN DE VARIABLES 
 DB_USER="healthcheck_user"               
 DB_NAME="bd_vivienda_coop"                
 TABLE_NAME="socios"                       # Nombre de una tabla crítica (ej. 'viviendas', 'socios') (AJUSTAR)
