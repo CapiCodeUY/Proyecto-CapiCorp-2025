@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Usuario - CapiCorp</title>
+  <link rel="stylesheet" href="CSS/estilos.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">CapiCorp Usuario</div>
+      <ul class="nav-links">
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="form-wrap">
+    <div class="container">
+      <div class="card">
+        <h1>Panel de Usuario</h1>
+        <h2>Completar Datos Personales</h2>
+        <form id="datos-form">
+          <div class="field">
+            <label for="tel">Teléfono</label>
+            <input class="input" type="text" id="tel" placeholder="Tu teléfono" required>
+          </div>
+          <div class="field">
+            <label for="ci">CI</label>
+            <input class="input" type="text" id="ci" placeholder="Tu CI" required>
+          </div>
+          <div class="field">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+          </div>
+        </form>
+        <h2>Registrar Horas Semanales</h2>
+        <form id="horas-form">
+          <div class="field">
+            <label for="horas">Horas trabajadas esta semana</label>
+            <input class="input" type="number" id="horas" min="0" max="21" placeholder="21 requeridas" required>
+          </div>
+          <div class="field" id="motivo-field" style="display:none;">
+            <label for="motivo">Motivo si <21 hs</label>
+            <textarea class="input" id="motivo" placeholder="Explica el motivo, solicita exoneración o pago compensatorio"></textarea>
+          </div>
+          <div class="field">
+            <button class="btn btn-primary" type="submit">Registrar</button>
+          </div>
+        </form>
+        <h2>Subir Comprobantes de Pago</h2>
+        <form id="pagos-form">
+          <div class="field">
+            <label for="comprobante">Comprobante (inicial/mensual/compensatorio)</label>
+            <input class="input" type="file" id="comprobante" required>
+          </div>
+          <div class="field">
+            <button class="btn btn-primary" type="submit">Subir</button>
+          </div>
+        </form>
+        <p id="status" aria-live="polite">Status: Cargando...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© CapiCode ® - CapiCorp</p>
+  </footer>
+
+  <script src="JScripts/scripts.js"></script>
+</body>
+</html>

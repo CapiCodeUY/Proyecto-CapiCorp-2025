@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - CapiCorp</title>
+  <link rel="stylesheet" href="CSS/estilos.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">CapiCorp Admin</div>
+      <ul class="nav-links">
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="form-wrap">
+    <div class="container">
+      <div class="card">
+        <h1>Panel de Administración</h1>
+        <h2>Registros Pendientes</h2>
+        <ul id="pendientes-list"></ul>
+
+        <h2>Usuarios</h2>
+        <input type="text" id="search" placeholder="Buscar por email/puerta">
+        <ul id="usuarios-list"></ul>
+
+        <h2>Reportes</h2>
+        <h3>Horarios de Habitantes</h3>
+        <ul id="horarios-list"></ul>
+
+        <h3>Registro de Horas</h3>
+        <select id="semana-select">
+          <option value="actual">Última semana</option>
+          <option value="1">Semana anterior</option>
+          <option value="2">2 semanas atrás</option>
+          <!-- Añadir más -->
+        </select>
+        <table id="horas-table">
+          <thead>
+            <tr><th>Usuario</th><th>Horas</th><th>Motivo</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© CapiCode ® - CapiCorp</p>
+  </footer>
+
+  <script src="JScripts/scripts.js"></script>
+</body>
+</html>
