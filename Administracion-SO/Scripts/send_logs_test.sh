@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# --- CONFIGURACIÓN DE VARIABLES ---
+# --- CONFIGURACIÓN DE VARIABLES -
 LOG_DIR="/var/log/aplicacion"             
 REMOTE_USER="backup_user"                 
 REMOTE_HOST="192.168.56.30"               
@@ -11,7 +11,7 @@ RSYNC_OPTIONS="-avz -e ssh"
 STATUS_SUCCESS=0
 STATUS_FAILURE=1
 
-# --- FUNCIONES DE UTILIDAD ---
+# --- FUNCIONES DE UTILIDAD 
 
 log_message() {
     local TYPE="$1"
@@ -56,7 +56,7 @@ perform_sync() {
     fi
 }
 
-# --- EJECUCIÓN DEL SCRIPT ---
+# --- EJECUCIÓN DEL SCRIPT 
 log_message "INFO" "--- INICIO DE ENVÍO DE LOGS DE APLICACIÓN ---"
 pre_check
 
