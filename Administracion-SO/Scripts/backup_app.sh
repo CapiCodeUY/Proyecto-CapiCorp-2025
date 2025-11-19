@@ -1,13 +1,14 @@
 #!/bin/bash
 
-APP_DIR="/opt/cooperativa/app"       
-BACKUP_DIR="/var/backups/app"        
-DATE=$(date +%Y%m%d%H%M%S)          
-BACKUP_FILE="app_backup_${DATE}.tar.gz" 
-LOG_FILE="/var/log/backup_app.log"   
-MIN_SIZE_KB=1000                     
+# --- CONFIGURACIÓN DE VARIABLES ---
+APP_DIR="/opt/cooperativa/viviendas/app" 
+BACKUP_DIR="/var/backups/app"            
+DATE=$(date +%Y%m%d%H%M%S)               
+BACKUP_FILE="app_viviendas_backup_${DATE}.tar.gz" 
+LOG_FILE="/var/log/backup_app.log"       
+MIN_SIZE_KB=1000                         
 
-
+# --- FUNCIONES ---
 
 # Función para registrar mensajes
 log_message() {
@@ -29,7 +30,7 @@ check_deps() {
 pre_check() {
     log_message "INFO" "Comprobando permisos y directorios..."
 
-    
+    # 1. Verificar directorio de origen
     if [ ! -d "$APP_DIR" ]; then
         log_message "FATAL" "Directorio de la aplicación no encontrado: $APP_DIR. Abortando."
         exit 1
@@ -50,15 +51,14 @@ pre_check() {
 perform_backup() {
     log_message "INFO" "Iniciando proceso de backup..."
     
-    # 3. Ejecutar la compresión
+    
     log_message "INFO" "Comprimiendo $APP_DIR en ${BACKUP_DIR}/${BACKUP_FILE}..."
     tar -czpf "${BACKUP_DIR}/${BACKUP_FILE}" "$APP_DIR" 2>> $LOG_FILE
 
-    # 4. Verificar el código de salida del comando tar
     if [ $? -eq 0 ]; then
         log_message "SUCCESS" "Backup creado exitosamente: ${BACKUP_FILE}"
         
-        # 5. Verificación de tamaño mínimo
+      
         local SIZE_KB=$(du -k "${BACKUP_DIR}/${BACKUP_FILE}" | awk '{print $1}')
         if [ "$SIZE_KB" -lt "$MIN_SIZE_KB" ]; then
             log_message "WARNING" "El archivo de backup es pequeño (${SIZE_KB} KB). Podría estar incompleto."
