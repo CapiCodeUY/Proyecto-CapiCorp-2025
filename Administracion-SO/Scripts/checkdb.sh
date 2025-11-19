@@ -2,13 +2,13 @@
 # Descripción: Comprueba que la BD principal de la Cooperativa de Viviendas responda consultas y tenga registros.
 
 # --- CONFIGURACIÓN DE VARIABLES ---
-DB_USER="healthcheck_user"                # Usuario definido en ~/.my.cnf
-DB_NAME="bd_vivienda_coop"                # Nombre de la base de datos principal (AJUSTAR)
+DB_USER="healthcheck_user"               
+DB_NAME="bd_vivienda_coop"                
 TABLE_NAME="socios"                       # Nombre de una tabla crítica (ej. 'viviendas', 'socios') (AJUSTAR)
 LOG_FILE="/var/log/checkdb_response.log"
-MIN_ROWS=1                                # Mínimo de filas esperado en la tabla crítica
+MIN_ROWS=1                               
 
-# --- FUNCIONES DE UTILIDAD ---
+# --- FUNCIONES DE UTILIDAD 
 
 log_message() {
     local TYPE="$1"
@@ -55,7 +55,7 @@ check_database_response() {
     rm -f /tmp/db_error.log
 }
 
-# --- EJECUCIÓN DEL SCRIPT ---
+# --- EJECUCIÓN DEL SCRIPT 
 log_message "INFO" "--- INICIO DE CHEQUEO DE RESPUESTA DE BASE DE DATOS ---"
 
 if ! check_connectivity; then
