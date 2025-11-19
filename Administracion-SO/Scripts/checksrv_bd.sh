@@ -1,13 +1,13 @@
 #!/bin/bash
 # Descripción: Verifica el estado del servicio MySQL/MariaDB de la Cooperativa.
 
-# --- CONFIGURACIÓN DE VARIABLES ---
+# --- CONFIGURACIÓN DE VARIABLES 
 SERVICE_NAME="mariadb"                      
 LOG_FILE="/var/log/checksrv_bd.log"
 ADMIN_EMAIL="dba_admin@cooperativa.com"     
 MAX_RETRIES=2                               
 
-# --- FUNCIONES DE UTILIDAD ---
+# --- FUNCIONES DE UTILIDAD 
 
 log_message() {
     local TYPE="$1"
@@ -51,7 +51,7 @@ check_service() {
     fi
 }
 
-# --- EJECUCIÓN DEL SCRIPT ---
+# --- EJECUCIÓN DEL SCRIPT 
 log_message "INFO" "--- INICIO DE CHEQUEO DE SERVICIO DE BASE DE DATOS ---"
 
 if check_service; then
