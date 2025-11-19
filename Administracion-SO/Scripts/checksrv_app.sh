@@ -7,7 +7,7 @@ LOG_FILE="/var/log/checksrv_app.log"
 ADMIN_EMAIL="admin@cooperativa.com"           
 HEALTH_STATUS=0                               
 
-# --- FUNCIONES ---
+# --- FUNCIONES 
 
 log_message() {
     local TYPE="$1"
@@ -64,7 +64,7 @@ check_containers() {
     done
 }
 
-# --- EJECUCIÓN DEL SCRIPT ---
+# --- EJECUCIÓN DEL SCRIPT 
 log_message "INFO" "--- INICIO DE CHEQUEO DE SERVICIOS DE APLICACIÓN ---"
 check_docker_service
 if [ "$HEALTH_STATUS" -lt 2 ]; then 
