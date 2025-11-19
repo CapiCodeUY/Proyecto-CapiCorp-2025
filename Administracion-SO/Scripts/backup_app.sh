@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# --- CONFIGURACIÓN DE VARIABLES ---
+# --- CONFIGURACIÓN DE VARIABLES 
 APP_DIR="/opt/cooperativa/viviendas/app" 
 BACKUP_DIR="/var/backups/app"            
 DATE=$(date +%Y%m%d%H%M%S)               
@@ -8,7 +8,7 @@ BACKUP_FILE="app_viviendas_backup_${DATE}.tar.gz"
 LOG_FILE="/var/log/backup_app.log"       
 MIN_SIZE_KB=1000                         
 
-# --- FUNCIONES ---
+# --- FUNCIONES 
 
 # Función para registrar mensajes
 log_message() {
@@ -71,7 +71,7 @@ perform_backup() {
     fi
 }
 
-# --- EJECUCIÓN DEL SCRIPT ---
+# --- EJECUCIÓN DEL SCRIPT 
 log_message "INFO" "--- INICIO DE BACKUP DE APLICACIÓN ---"
 check_deps
 pre_check
