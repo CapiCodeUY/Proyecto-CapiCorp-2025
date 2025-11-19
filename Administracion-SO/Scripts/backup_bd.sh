@@ -1,6 +1,7 @@
 #!/bin/bash
+#Descripción: Realiza un backup completo de MySQL (bases de datos de la Cooperativa de Viviendas).
 
-# --- CONFIGURACIÓN DE VARIABLES ---
+# --- CONFIGURACIÓN DE VARIABLES 
 DB_USER="backup_user"                        
 DB_HOST="localhost"                          
 BACKUP_DIR="/var/backups/mysql"              
@@ -9,7 +10,7 @@ BACKUP_FILE="${BACKUP_DIR}/bd_vivienda_dump_${DATE}.sql.gz"
 LOG_FILE="/var/log/backup_bd.log"
 MIN_SIZE_KB=50                               
 
-# --- FUNCIONES ---
+# --- FUNCIONES 
 
 log_message() {
     local TYPE="$1"
@@ -79,7 +80,7 @@ verify_backup() {
     fi
 }
 
-# --- EJECUCIÓN DEL SCRIPT ---
+# --- EJECUCIÓN DEL SCRIPT 
 log_message "INFO" "--- INICIO DE BACKUP DE BASE DE DATOS ---"
 pre_check
 check_mysql_is_up
